@@ -33,6 +33,43 @@ const projectStore = create((set) => ({
       console.error('Error fetching projects:', error);
     }
   },
+
+  projectRequestById: async (id) => {
+    try {
+      const token = getToken(); // Get the token from cookies
+      const response = await axios.get(`${BASE_URL}/project/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`, // Set the Authorization header
+        },
+      });
+      set({ project: response.data.data });
+    } catch (error) {
+      console.error('Error fetching projects:', error);
+    }
+  },
+
+
+
+  projectDeleteByID : async (id) => {
+    try {
+      const token = getToken();
+      await axios.delete(`${BASE_URL}/project-delete/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      // Refetch the list of projects after deletion
+      projectRequest();
+    } catch (error) {
+      console.error('Error deleting item:', error);
+    }
+  }
+  
+
+
+
+
+
 }));
 
 export default projectStore;

@@ -1,4 +1,4 @@
-import  { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Space, Table, Modal } from "antd";
 import Test from "../../Layout/Test";
 import projectStore from "../../store/projectStore";
@@ -8,16 +8,21 @@ import {
   DeleteOutlined,
   EyeOutlined,
 } from "@ant-design/icons";
+import ProjectView from "./ProjectView";
+import toast, { Toaster } from "react-hot-toast";
 
 const ProjectTable = () => {
-  const { project, projectRequest } = projectStore((state) => state);
+  const { project, projectRequest, projectDeleteByID } = projectStore(
+    (state) => state
+  );
 
   useEffect(() => {
     projectRequest();
-  }, []);
+  }, [project,projectRequest]);
 
   //   modal function
   const [open, setOpen] = useState(false);
+  const [selectedProject, setSelectedProject] = useState(null);
 
   // Columns configuration
   const columns = [
@@ -66,28 +71,46 @@ const ProjectTable = () => {
         <Space size="middle">
           <EditOutlined />
           <ReadOutlined />
-          <DeleteOutlined />
-          <EyeOutlined onClick={() => setOpen(true)} />
+          <DeleteOutlined onClick={() => handleDelete(record._id)} />
+          <EyeOutlined onClick={() => handleViewClick(record)} />
         </Space>
       ),
     },
   ];
 
+  const handleViewClick = (record) => {
+    setSelectedProject(record);
+    setOpen(true);
+  };
+
+  const handleDelete = async (id) => {
+    try {
+      await projectDeleteByID(id);
+      toast.success("Item deleted successfully");
+    } catch (error) {
+      console.error("Error deleting item:", error);
+      toast.error("Failed to delete item");
+    }
+  };
+
   return (
     <Test>
+      <Toaster position="top-center" reverseOrder={false} />
+
+
       <h2>Projects</h2>
       <Table columns={columns} dataSource={project} />
 
       {/* modal here for view product */}
       <Modal
-        title="Modal 1000px width"
+        footer={null}
         centered
         open={open}
         onOk={() => setOpen(false)}
         onCancel={() => setOpen(false)}
         width={1000}
       >
-        
+        {selectedProject && <ProjectView project={selectedProject} />}
       </Modal>
     </Test>
   );
