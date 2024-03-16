@@ -1,15 +1,15 @@
 /* eslint-disable react/prop-types */
 import { Fragment, useState, useEffect } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import axios from "axios";
-import toast, { Toaster } from "react-hot-toast";
 import ProfileDropDown from "./ProfileDropDown";
 
 const MasterLayout = (props) => {
   const [userData, setUserData] = useState(null);
   const isLoggedIn = Cookies.get("token");
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -64,6 +64,10 @@ const MasterLayout = (props) => {
     showNavbar("header-toggle", "nav-bar", "main-container", "header");
   }, []);
 
+  if (!isLoggedIn) {
+    return navigate("/login");
+  }
+
   return (
     <Fragment>
       {/* Header */}
@@ -96,10 +100,12 @@ const MasterLayout = (props) => {
                 <i className="bx bx-user nav_icon"></i>
                 <span className="nav_name">Users</span>
               </a>
-              <NavLink to={'/project'} className="nav_link active text-decoration-none">
-              <i className="bx bx-message-square-detail nav_icon"></i>
+              <NavLink
+                to={"/project"}
+                className="nav_link active text-decoration-none"
+              >
+                <i className="bx bx-message-square-detail nav_icon"></i>
                 <span className="nav_name">Project</span>
-
               </NavLink>
               <a href="#" className="nav_link">
                 <i className="bx bx-bookmark nav_icon"></i>
@@ -129,8 +135,6 @@ const MasterLayout = (props) => {
       >
         {props.children}
       </div>
-
-      <Toaster position="top-center" reverseOrder={false} />
     </Fragment>
   );
 };

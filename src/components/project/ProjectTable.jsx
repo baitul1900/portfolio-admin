@@ -10,6 +10,8 @@ import {
 } from "@ant-design/icons";
 import ProjectView from "./ProjectView";
 import toast, { Toaster } from "react-hot-toast";
+import ProjectCreate from "./ProjectCreate";
+import { Link } from "react-router-dom";
 
 const ProjectTable = () => {
   const { project, projectRequest, projectDeleteByID } = projectStore(
@@ -18,10 +20,11 @@ const ProjectTable = () => {
 
   useEffect(() => {
     projectRequest();
-  }, [project,projectRequest]);
+  }, [project, projectRequest]);
 
   //   modal function
   const [open, setOpen] = useState(false);
+  const [openTwo, setOpenTwo] = useState(false);
   const [selectedProject, setSelectedProject] = useState(null);
 
   // Columns configuration
@@ -97,8 +100,12 @@ const ProjectTable = () => {
     <Test>
       <Toaster position="top-center" reverseOrder={false} />
 
-
-      <h2>Projects</h2>
+      <div className="d-flex justify-content-between">
+        <h1>Project</h1>
+        <Link className="btn btn-success mb-4" onClick={() => setOpenTwo(true)}>
+          Add Cart
+        </Link>
+      </div>
       <Table columns={columns} dataSource={project} />
 
       {/* modal here for view product */}
@@ -111,6 +118,18 @@ const ProjectTable = () => {
         width={1000}
       >
         {selectedProject && <ProjectView project={selectedProject} />}
+      </Modal>
+
+      {/* modal here for view product */}
+      <Modal
+        footer={null}
+        centered
+        open={openTwo}
+        onOk={() => setOpenTwo(false)}
+        onCancel={() => setOpenTwo(false)}
+        width={1000}
+      >
+        <ProjectCreate />
       </Modal>
     </Test>
   );

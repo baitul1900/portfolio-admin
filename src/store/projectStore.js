@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import { create } from 'zustand';
 import axios from 'axios';
 import Cookies from 'js-cookie';
@@ -63,8 +64,25 @@ const projectStore = create((set) => ({
     } catch (error) {
       console.error('Error deleting item:', error);
     }
-  }
+  },
+
   
+
+  
+   createProject: async (projectData) => {
+      try {
+          const token = getToken();
+          const response = await axios.post(`${BASE_URL}/create-project`, projectData, {
+              headers: {
+                  Authorization: `Bearer ${token}`,
+              },
+          })
+          return response.data; 
+      }
+      catch (error) {
+          console.error('Error creating project:', error);
+      }
+  }
 
 
 

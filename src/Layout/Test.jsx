@@ -16,13 +16,12 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
 import ProfileDropDown from "./ProfileDropDown";
 import Cookies from "js-cookie";
 import axios from "axios";
-import toast, { Toaster } from "react-hot-toast";
 import { Link, NavLink } from "react-router-dom";
 import ArticleRoundedIcon from '@mui/icons-material/ArticleRounded';
+import { Toaster } from "react-hot-toast";
 
 const drawerWidth = 240;
 
@@ -137,6 +136,14 @@ export default function Test(props) {
   const bottomDrawerItems = [
     
   ];
+
+  if (!isLoggedIn) {
+    drawerItems.push({ text: "Login", link: "/login" });
+    drawerItems.push({
+      text: "Registration",
+      link: "/registration",
+    });
+  }
 
   return (
     <Box sx={{ display: "flex" }}>
