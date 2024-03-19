@@ -6,6 +6,7 @@ import SideNavigation from "./pages/SideNavigation";
 import OTPComponent from "./components/OTPComponent";
 import ProjectTable from "../src/components/project/ProjectTable";
 import ProjectView from "./components/project/ProjectView";
+import ProjectUpdatePage from "./pages/ProjectUpdatePage";
 
 const App = () => {
   return (
@@ -18,6 +19,7 @@ const App = () => {
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/project" element={<ProjectTable />} />
         <Route path="/project/:id" element={<ProjectView />} />
+        <Route path="/project-update/:id" element={<ProjectUpdatePage/>} />
       </Routes>
     </BrowserRouter>
   );

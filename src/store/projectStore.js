@@ -82,12 +82,39 @@ const projectStore = create((set) => ({
       catch (error) {
           console.error('Error creating project:', error);
       }
-  }
+  },
+
+  searchKeyword: async (keyword) => {
+    try {
+      const token = getToken();
+      const response = await axios.get(`${BASE_URL}/projects?keyword=${keyword}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      set({ project: response.data.data });
+    } catch (error) {
+      console.error('Error searching projects:', error);
+    }
+  },
 
 
 
-
+  // update project
+  updateProject: async (id, projectData) => {
+    try {
+      const token = getToken();
+      const response = await axios.post(`${BASE_URL}/project-update/${id}`, projectData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      return response.data.data;
+    } catch (error) {
+      console.error('Error updating project:', error);
+    }
+  },
 
 }));
 
-export default projectStore;
+export default projectStore;  
