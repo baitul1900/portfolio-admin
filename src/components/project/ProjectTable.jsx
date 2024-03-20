@@ -20,7 +20,7 @@ const ProjectTable = () => {
 
   useEffect(() => {
     projectRequest();
-  }, [project, projectRequest]);
+  }, []);
 
   const handleSearch = async (value) => {
     if (value) {
@@ -120,7 +120,7 @@ const ProjectTable = () => {
   };
 
   return (
-    <Test>
+    <>
       <Toaster position="top-center" reverseOrder={false} />
 
       <div className="row d-flex justify-content-between">
@@ -173,7 +173,7 @@ const ProjectTable = () => {
       >
         <ProjectCreate />
       </Modal>
-    </Test>
+    </>
   );
 };
 

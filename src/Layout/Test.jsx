@@ -20,7 +20,7 @@ import ProfileDropDown from "./ProfileDropDown";
 import Cookies from "js-cookie";
 import axios from "axios";
 import { Link, NavLink } from "react-router-dom";
-import ArticleRoundedIcon from '@mui/icons-material/ArticleRounded';
+import ArticleRoundedIcon from "@mui/icons-material/ArticleRounded";
 import { Toaster } from "react-hot-toast";
 
 const drawerWidth = 240;
@@ -129,13 +129,19 @@ export default function Test(props) {
   };
 
   const drawerItems = [
-    { text: "Project", icon: <ArticleRoundedIcon />, link: "/project" },
-  
+    {
+      text: "Project",
+      icon: <i className="bi bi-kanban"></i>,
+      link: "/project",
+    },
+    {
+      text: "Service",
+      icon: <i className="bi bi-stack"></i>,
+      link: "/service",
+    },
   ];
 
-  const bottomDrawerItems = [
-    
-  ];
+  const bottomDrawerItems = [];
 
   if (!isLoggedIn) {
     drawerItems.push({ text: "Login", link: "/login" });
@@ -256,7 +262,7 @@ export default function Test(props) {
           ))}
         </List>
       </Drawer>
-      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+      <Box component="main" sx={{ flexGrow: 2, p: 3 }}>
         <DrawerHeader />
         {props.children}
       </Box>
