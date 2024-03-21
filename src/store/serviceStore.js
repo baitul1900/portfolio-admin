@@ -29,9 +29,7 @@ const serviceStore = create((set) => ({
   serviceRequestList: async () => {
     try {
       const res = await axios.get(`${BASE_URL}/service`);
-      if(res.data["status"]=== "success") {
-        set({ serviceList: res.data['data'] });
-      }
+      set({ serviceList: res.data.data });
     } catch (error) {
       console.error('Error fetching services:', error);
     }
@@ -46,11 +44,14 @@ const serviceStore = create((set) => ({
           Authorization: `Bearer ${token}`, // Set the Authorization header
         },
       });
-      set({ serviceList: response.data.data });
+      set((state) => ({
+        serviceList: Array.isArray(response.data.data) ? response.data.data : [response.data.data]
+      }));
     } catch (error) {
       console.error('Error fetching services:', error);
     }
   }
+  
 
 }));
 

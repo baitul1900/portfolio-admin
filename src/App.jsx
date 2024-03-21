@@ -8,6 +8,7 @@ import ProjectView from "./components/project/ProjectView";
 import ProjectUpdatePage from "./pages/ProjectUpdatePage";
 import ProjectPage from "../src/pages/ProjectPage";
 import ServicePage from "./pages/ServicePage";
+import ServiceById from "./components/serviceComponent/ServiceById";
 
 const App = () => {
   return (
@@ -18,10 +19,11 @@ const App = () => {
         <Route path="/otp" element={<OTPComponent />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/profile" element={<ProfilePage />} />
-        <Route path="/project" element={<ProjectPage/>} />
+        <Route path="/project" element={<ProjectPage />} />
         <Route path="/project/:id" element={<ProjectView />} />
-        <Route path="/project-update/:id" element={<ProjectUpdatePage/>} />
-        <Route path="/service" element={<ServicePage/>} />
+        <Route path="/project-update/:id" element={<ProjectUpdatePage />} />
+        <Route path="/service" element={<ServicePage />} />
+        <Route path="/servicebyId/:id" element={<ServiceById />} />
       </Routes>
     </BrowserRouter>
   );
