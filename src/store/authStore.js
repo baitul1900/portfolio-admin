@@ -33,7 +33,7 @@ export const loginUser = async (email, password) => {
       // Store the token in session storage
       sessionStorage.setItem('token', token);
 
-      console.log('Token:', token);
+      // console.log('Token:', token);
       
       // Store the token in a cookie
       Cookies.set('token', token, { expires: 1 }); // Adjust expiry date as needed

@@ -50,6 +50,35 @@ const serviceStore = create((set) => ({
     } catch (error) {
       console.error('Error fetching services:', error);
     }
+  },
+
+  createService: async (serviceData) => {
+    try {
+        const token = getToken();
+        const response = await axios.post(`${BASE_URL}/create-service`, serviceData, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+        return response.data.data; 
+    }
+    catch (error) {
+        console.error('Error creating project:', error);
+    }
+},
+
+  updateService: async (id, serviceData) => {
+    try {
+      const token = getToken();
+      const response = await axios.post(`${BASE_URL}/service-update/${id}`, serviceData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      return response.data.data;
+    } catch (error) {
+      console.error('Error updating service:', error);
+    }
   }
   
 

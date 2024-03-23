@@ -3,20 +3,17 @@ import { Link } from "react-router-dom";
 import serviceStore from "../../store/serviceStore";
 
 const ServiceTable = () => {
-  const { serviceList, serviceRequestList } = serviceStore(
-    (state) => state
-  );
+  const { serviceList, serviceRequestList } = serviceStore((state) => state);
 
   useEffect(() => {
     serviceRequestList();
   }, []);
 
-
   return (
     <>
       <div className="container-fluid d-flex justify-content-between align-items-center">
         <h1>Services</h1>
-        <Link to="/add-service" className="btn btn-danger">
+        <Link to={"/create-service"} className="btn btn-danger">
           Add New <i className="bi bi-plus-square"></i>
         </Link>
       </div>
@@ -48,6 +45,13 @@ const ServiceTable = () => {
                   className="btn btn-primary"
                 >
                   <i className="bi bi-eye"></i>
+                </Link>
+
+                <Link
+                  to={`/update-service/${service._id}`}
+                  className="btn btn-secondary"
+                >
+                  <i className="bi bi-arrow-clockwise"></i>
                 </Link>
               </td>
             </tr>

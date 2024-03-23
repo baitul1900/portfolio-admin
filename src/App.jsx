@@ -9,6 +9,8 @@ import ProjectUpdatePage from "./pages/ProjectUpdatePage";
 import ProjectPage from "../src/pages/ProjectPage";
 import ServicePage from "./pages/ServicePage";
 import ServiceById from "./components/serviceComponent/ServiceById";
+import CreateService from "./components/serviceComponent/CreateService";
+import ServiceUpdate from "./components/serviceComponent/ServiceUpdate";
 
 const App = () => {
   return (
@@ -24,6 +26,8 @@ const App = () => {
         <Route path="/project-update/:id" element={<ProjectUpdatePage />} />
         <Route path="/service" element={<ServicePage />} />
         <Route path="/servicebyId/:id" element={<ServiceById />} />
+        <Route path="/create-service" element={<CreateService/>} />
+        <Route path="/update-service/:id" element={<ServiceUpdate/>} />
       </Routes>
     </BrowserRouter>
   );
