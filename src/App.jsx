@@ -11,6 +11,7 @@ import ServicePage from "./pages/ServicePage";
 import ServiceById from "./components/serviceComponent/ServiceById";
 import CreateService from "./components/serviceComponent/CreateService";
 import ServiceUpdate from "./components/serviceComponent/ServiceUpdate";
+import BlogPage from "./pages/BlogPage";
 
 const App = () => {
   return (
@@ -28,6 +29,7 @@ const App = () => {
         <Route path="/servicebyId/:id" element={<ServiceById />} />
         <Route path="/create-service" element={<CreateService/>} />
         <Route path="/update-service/:id" element={<ServiceUpdate/>} />
+        <Route path="blog" element={<BlogPage/>} />
       </Routes>
     </BrowserRouter>
   );

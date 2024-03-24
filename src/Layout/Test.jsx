@@ -139,6 +139,11 @@ export default function Test(props) {
       icon: <i className="bi bi-stack"></i>,
       link: "/service",
     },
+    {
+      text: "Blog",
+      icon: <i className="bi bi-newspaper"></i>,
+      link: "/blog",
+    },
   ];
 
   const bottomDrawerItems = [];
@@ -262,7 +267,7 @@ export default function Test(props) {
           ))}
         </List>
       </Drawer>
-      <Box component="main" sx={{ flexGrow: 2, p: 3 }}>
+      <Box component="main" sx={{ flexGrow: 3, p: 3 }}>
         <DrawerHeader />
         {props.children}
       </Box>

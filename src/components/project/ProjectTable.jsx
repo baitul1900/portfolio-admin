@@ -1,13 +1,7 @@
 import { useEffect, useState } from "react";
 import { Space, Table, Modal } from "antd";
-import Test from "../../Layout/Test";
 import projectStore from "../../store/projectStore";
-import {
-  EditOutlined,
-  ReadOutlined,
-  DeleteOutlined,
-  EyeOutlined,
-} from "@ant-design/icons";
+import { EditOutlined, DeleteOutlined, EyeOutlined } from "@ant-design/icons";
 import ProjectView from "./ProjectView";
 import toast, { Toaster } from "react-hot-toast";
 import ProjectCreate from "./ProjectCreate";
@@ -161,15 +155,17 @@ const ProjectTable = () => {
       >
         {selectedProject && <ProjectView project={selectedProject} />}
       </Modal>
+      {/* modal here for view product end*/}
 
-      {/* modal here for view product */}
       <Modal
         footer={null}
-        centered
+        top
         open={openTwo}
         onOk={() => setOpenTwo(false)}
         onCancel={() => setOpenTwo(false)}
         width={1000}
+        height={600}
+        className=" mb-5"
       >
         <ProjectCreate />
       </Modal>

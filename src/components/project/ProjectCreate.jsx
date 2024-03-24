@@ -16,6 +16,9 @@ const ProjectCreate = () => {
     allPage: [],
     allFeature: [],
   });
+
+
+  
   const [image, setImage] = useState(null);
   const navigate = useNavigate();
   const { createProject } = projectStore((state) => state);
@@ -171,7 +174,7 @@ const ProjectCreate = () => {
             placeholder="Enter all features"
           />
         </div>
-        
+
         <button type="submit" className="btn btn-primary">
           Create Project
         </button>
