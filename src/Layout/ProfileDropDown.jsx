@@ -3,13 +3,14 @@ import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
-import { UserOutlined } from "@ant-design/icons";
-import { Dropdown, Space } from "antd";
-
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import { Button } from "@mui/material";
 const ProfileDropDown = () => {
   const [userData, setUserData] = useState(null);
   const isLoggedIn = Cookies.get("token");
   const navigation = useNavigate();
+  const [anchorEl, setAnchorEl] = useState(null);
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -42,22 +43,30 @@ const ProfileDropDown = () => {
     navigation("/login");
   };
 
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   const items = [
     {
       key: "1",
       label: (
-        <Link className="nav-link" to="/profile">
+        <MenuItem component={Link} to="/profile" onClick={handleClose}>
           Profile
-        </Link>
+        </MenuItem>
       ),
-      icon: <UserOutlined />,
+      icon: <i className="bi bi-person"></i>,
     },
     {
       key: "2",
       label: (
-        <Link className="nav-link" onClick={handleLogout}>
+        <MenuItem onClick={() => { handleLogout(); handleClose(); }}>
           Logout
-        </Link>
+        </MenuItem>
       ),
     },
   ];
@@ -67,23 +76,32 @@ const ProfileDropDown = () => {
       {userData && (
         <>
           <Toaster position="top-center" reverseOrder={false} />
-          <Dropdown
-            menu={{
-              items,
+          <Button onClick={handleClick}>
+            <img
+              src={userData.image ? userData.image : "user-avatar.png"}
+              alt="User Avatar"
+              className="img-fluid profile-top pb-2 profile-image"
+            />
+          </Button>
+          <Menu
+            anchorEl={anchorEl}
+            open={Boolean(anchorEl)}
+            onClose={handleClose}
+            anchorOrigin={{
+              vertical: "top",
+              horizontal: "right",
             }}
-            placement="bottom"
-            style={{ zIndex: 999 }}
+            transformOrigin={{
+              vertical: "top",
+              horizontal: "right",
+            }}
           >
-            <a onClick={(e) => e.preventDefault()}>
-              <Space>
-                <img
-                  src={userData.image ? userData.image : "user-avatar.png"}
-                  alt="User Avatar"
-                  className="img-fluid profile-top pb-2 profile-image"
-                />
-              </Space>
-            </a>
-          </Dropdown>
+            {items.map((item) => (
+              <div key={item.key}>
+                {item.label}
+              </div>
+            ))}
+          </Menu>
         </>
       )}
     </>

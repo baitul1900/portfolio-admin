@@ -1,40 +1,56 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import toast, { Toaster } from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import firebase from "firebase/compat/app";
 import "firebase/compat/storage";
 import blogStore from "../../store/blogStore";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
-const BlogCreate = () => {
+const UpdateBlog = () => {
+  const { updateBlog, blogRequestById } = blogStore((state) => state);
+  const { id } = useParams(); // Assuming you have access to the project ID from the route
   const [formData, setFormData] = useState({
     title: "",
     shortDes: "",
-    image: "",
     des: "",
     author: "",
+    image: "",
   });
 
   const [image, setImage] = useState(null);
   const navigate = useNavigate();
-  const { createBlog } = blogStore((state) => state);
+  const [loading, setLoading] = useState(false); // State to track loading
 
-    const handleCKEditorChange = (e, editor) => {
-      const data = editor.getData();
-      setFormData((prevState) => ({
-        ...prevState,
-        des: data,
-      }));
+  useEffect(() => {
+    const fetachBlogData = async () => {
+      try {
+        const blogData = await updateBlog(id);
+        console.log("Blog data:", blogData); // Log the blog data here
+        setFormData(blogData);
+      } catch (e) {
+        console.error(e);
+        toast.error("Failed to fetch blog data");
+      }
     };
+    fetachBlogData();
+  }, [id]);
 
-    const handleInputChange = (e) => {
-      const { name, value } = e.target;
-      setFormData((prevState) => ({
-        ...prevState,
-        [name]: value,
-      }));
-    };
+  const handleCKEditorChange = (e, editor) => {
+    const data = editor.getData();
+    setFormData((prevState) => ({
+      ...prevState,
+      des: data,
+    }));
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
 
   const handleImageChange = (e) => {
     setImage(e.target.files[0]);
@@ -42,8 +58,9 @@ const BlogCreate = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true); // Set loading to true when submitting the form
     try {
-      let imageUrl = "";
+      let imageUrl = formData.image; // Keep the existing image URL if not updated
       if (image) {
         const storageRef = firebase.storage().ref();
         const imageRef = storageRef.child(`blog-images/${image.name}`);
@@ -51,25 +68,30 @@ const BlogCreate = () => {
         imageUrl = await snapshot.ref.getDownloadURL();
       }
       const updatedFormData = { ...formData, image: imageUrl };
-      const response = await createBlog(updatedFormData);
-
-      if (response.status === "success") {
-        toast.success("Blog Created Successfully");
+      const response = await updateBlog(id, updatedFormData);
+  
+      if (response) {
+        toast.success("Blog Updated Successfully");
         navigate("/blog");
+      } else {
+        toast.error("Failed to update Blog");
       }
     } catch (error) {
       console.error(error);
-      toast.error("Failed to create blog");
+      toast.error("Failed to update Blog");
+    } finally {
+      setLoading(false); // Set loading back to false after form submission
     }
   };
+  
 
   return (
     <>
-      <h2>Create Project</h2>
+      <h2>Create Blog</h2>
       <form onSubmit={handleSubmit} className="mt-4">
         <div className="mb-3">
           <label htmlFor="title" className="form-label">
-            Project Name
+            Title
           </label>
           <input
             type="text"
@@ -133,8 +155,12 @@ const BlogCreate = () => {
           />
         </div>
 
-        <button type="submit" className="btn btn-danger mt-4">
-          Create Project
+        <button
+          type="submit"
+          className="btn btn-danger mt-4"
+          disabled={loading}
+        >
+          {loading ? "Submitting..." : "Create Blog"}
         </button>
       </form>
       <Toaster position="top-center" reverseOrder={false} />
@@ -142,4 +168,4 @@ const BlogCreate = () => {
   );
 };
 
-export default BlogCreate;
+export default UpdateBlog;

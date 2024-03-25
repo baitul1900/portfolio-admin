@@ -1,5 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
-import { Space, Table, Modal } from "antd";
+import { Space, Table, Modal, ConfigProvider } from "antd";
 import projectStore from "../../store/projectStore";
 import { EditOutlined, DeleteOutlined, EyeOutlined } from "@ant-design/icons";
 import ProjectView from "./ProjectView";
@@ -14,7 +15,7 @@ const ProjectTable = () => {
 
   useEffect(() => {
     projectRequest();
-  }, []);
+  }, [project]);
 
   const handleSearch = async (value) => {
     if (value) {
@@ -136,13 +137,42 @@ const ProjectTable = () => {
             className="btn btn-success mb-4"
             onClick={() => setOpenTwo(true)}
           >
-            Add Cart
+            Add Project
           </Link>
         </div>
       </div>
 
       {/* table here */}
-      <Table columns={columns} dataSource={project} />
+      <ConfigProvider
+        theme={{
+          components: {
+            Table: {
+              cellFontSizeMD: 16,
+            },
+            Pagination: {},
+          },
+        }}
+      >
+        <Table
+          columns={columns}
+          dataSource={project}
+          size="middle"
+          bordered
+          pagination={{
+            pageSize: 10,
+            showSizeChanger: true,
+            defaultPageSize: 10,
+            pageSizeOptions: ["10", "20", "50"],
+            showQuickJumper: true,
+            total: project.length,
+            showTotal: (total) => `Total ${total} items`,
+            position: ["bottomRight"],
+            style: {
+              marginTop: "26px",
+            },
+          }}
+        />
+      </ConfigProvider>
 
       {/* modal here for view product */}
       <Modal

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { updateUserProfile, getUserProfile } from "../store/authStore";
 import toast, { Toaster } from "react-hot-toast";
-import { Button } from "primereact/button";
 import firebase from "firebase/compat/app";
 import "firebase/compat/storage";
 

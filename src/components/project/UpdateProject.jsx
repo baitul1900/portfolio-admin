@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import firebase from "firebase/compat/app";
 import "firebase/compat/storage";
 import projectStore from "../../store/projectStore";
+import Swal from 'sweetalert2'
 
 const UpdateProject = () => {
   const { updateProject, projectRequestById } = projectStore((state) => state);
