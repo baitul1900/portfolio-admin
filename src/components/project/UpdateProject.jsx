@@ -4,7 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import firebase from "firebase/compat/app";
 import "firebase/compat/storage";
 import projectStore from "../../store/projectStore";
-import Swal from 'sweetalert2'
+import Swal from "sweetalert2";
 
 const UpdateProject = () => {
   const { updateProject, projectRequestById } = projectStore((state) => state);
@@ -62,7 +62,7 @@ const UpdateProject = () => {
       }
       const updatedFormData = { ...formData, image: imageUrl };
       const response = await updateProject(id, updatedFormData);
-  
+
       if (response) {
         toast.success("Project Updated Successfully");
         navigate("/project");
@@ -74,7 +74,6 @@ const UpdateProject = () => {
       toast.error("Failed to update project");
     }
   };
-  
 
   return (
     <div>
@@ -198,7 +197,7 @@ const UpdateProject = () => {
 
           {/* Add more fields for other project properties */}
 
-          <button type="submit" className="btn btn-primary">
+          <button type="submit" className="btn btn-danger">
             Update Project
           </button>
         </form>

@@ -69,7 +69,7 @@ const UpdateBlog = () => {
       }
       const updatedFormData = { ...formData, image: imageUrl };
       const response = await updateBlog(id, updatedFormData);
-  
+
       if (response) {
         toast.success("Blog Updated Successfully");
         navigate("/blog");
@@ -83,86 +83,88 @@ const UpdateBlog = () => {
       setLoading(false); // Set loading back to false after form submission
     }
   };
-  
 
   return (
     <>
-      <h2>Create Blog</h2>
-      <form onSubmit={handleSubmit} className="mt-4">
-        <div className="mb-3">
-          <label htmlFor="title" className="form-label">
-            Title
-          </label>
-          <input
-            type="text"
-            name="title"
-            value={formData.title}
-            onChange={handleInputChange}
-            className="form-control"
-            id="blogTitle"
-            placeholder="Title"
-          />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="shortDes" className="form-label">
-            Short Des
-          </label>
-          <input
-            type="text"
-            name="shortDes"
-            value={formData.shortDes}
-            onChange={handleInputChange}
-            className="form-control"
-            id="shortDes"
-            placeholder="Short Des "
-          />
-        </div>
+      <div className="container">
+        <h2>Create Blog</h2>
+        <form onSubmit={handleSubmit} className="mt-4">
+          <div className="mb-3">
+            <label htmlFor="title" className="form-label">
+              Title
+            </label>
+            <input
+              type="text"
+              name="title"
+              value={formData.title}
+              onChange={handleInputChange}
+              className="form-control"
+              id="blogTitle"
+              placeholder="Title"
+            />
+          </div>
+          <div className="mb-3">
+            <label htmlFor="shortDes" className="form-label">
+              Short Des
+            </label>
+            <input
+              type="text"
+              name="shortDes"
+              value={formData.shortDes}
+              onChange={handleInputChange}
+              className="form-control"
+              id="shortDes"
+              placeholder="Short Des "
+            />
+          </div>
 
-        <div className="mb-3">
-          <label htmlFor="des" className="form-label">
-            Description
-          </label>
-          <CKEditor
-            editor={ClassicEditor}
-            onChange={handleCKEditorChange}
-            data={formData.des}
-          />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="image" className="form-label">
-            Image Upload
-          </label>
-          <input
-            type="file"
-            name="image"
-            onChange={handleImageChange}
-            className="form-control"
-            id="image"
-          />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="author" className="form-label">
-            Author Name
-          </label>
-          <input
-            type="text"
-            name="author"
-            value={formData.author}
-            onChange={handleInputChange}
-            className="form-control"
-            id="author"
-            placeholder="Author Name"
-          />
-        </div>
+          <div className="mb-3">
+            <label htmlFor="des" className="form-label">
+              Description
+            </label>
+            <CKEditor
+              editor={ClassicEditor}
+              onChange={handleCKEditorChange}
+              data={formData.des}
+            />
+          </div>
+          <div className="mb-3">
+            <label htmlFor="image" className="form-label">
+              Image Upload
+            </label>
+            <input
+              type="file"
+              name="image"
+              onChange={handleImageChange}
+              className="form-control"
+              id="image"
+            />
+          </div>
+          <div className="mb-3">
+            <label htmlFor="author" className="form-label">
+              Author Name
+            </label>
+            <input
+              type="text"
+              name="author"
+              value={formData.author}
+              onChange={handleInputChange}
+              className="form-control"
+              id="author"
+              placeholder="Author Name"
+            />
+          </div>
 
-        <button
-          type="submit"
-          className="btn btn-danger mt-4"
-          disabled={loading}
-        >
-          {loading ? "Submitting..." : "Create Blog"}
-        </button>
-      </form>
+          <button
+            type="submit"
+            className="btn btn-danger mt-4 border-0"
+            disabled={loading}
+          >
+            {loading ? "Submitting..." : "Create Blog"}
+          </button>
+        </form>
+      </div>
+
       <Toaster position="top-center" reverseOrder={false} />
     </>
   );

@@ -13,6 +13,7 @@ import ServiceUpdate from "./components/serviceComponent/ServiceUpdate";
 import BlogPage from "./pages/BlogPage";
 import BlogUpdatedPage from "./pages/BlogUpdatedPage";
 import Dashboard from "./pages/Dashboard";
+import CommentPage from "./pages/CommentPage";
 
 const App = () => {
   return (
@@ -32,6 +33,7 @@ const App = () => {
         <Route path="/update-service/:id" element={<ServiceUpdate/>} />
         <Route path="blog" element={<BlogPage/>} />
         <Route path="blog-updated/:id" element={<BlogUpdatedPage/>} />
+        <Route path="/comments" element={<CommentPage/>} />
       </Routes>
     </BrowserRouter>
   );

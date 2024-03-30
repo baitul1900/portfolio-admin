@@ -1,20 +1,20 @@
 import { useEffect, useState } from "react";
 import { Space, Table, Modal, ConfigProvider } from "antd";
-import { EditOutlined, DeleteOutlined, EyeOutlined } from "@ant-design/icons";
+import { EditOutlined, EyeOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import blogStore from "../../store/blogStore";
 import BlogView from "./BlogView";
 import BlogCreate from "./BlogCreate";
 
 const BlogTable = () => {
-  const { blogList, blogRequest, blogDeleteByID } = blogStore((state) => state);
+  const { blogList, blogRequest } = blogStore((state) => state);
   const [selectedBlog, setSeletedBlog] = useState(null);
   const [open, setOpen] = useState(false);
   const [openTwo, setOpenTwo] = useState(false);
 
   useEffect(() => {
     blogRequest();
-  }, []);
+  }, [blogList]);
 
   // table items here
   const columns = [
@@ -41,7 +41,7 @@ const BlogTable = () => {
       render: (text) => {
         const truncatedText =
           text.length > 20 ? text.substring(0, 20) + "..." : text;
-        return <span>{truncatedText}</span>;
+        return <span > <div dangerouslySetInnerHTML={{ __html: truncatedText }}></div></span>;
       },
     },
     {

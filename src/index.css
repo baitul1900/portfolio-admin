@@ -181,3 +181,11 @@ h1 {
   margin-left: 240px;
   width: calc(100% - 240px);
 }
+
+/* pagination active color  */
+:where(.css-dev-only-do-not-override-inlw69).ant-pagination
+  .ant-pagination-item-active {
+  font-weight: 600;
+  background-color: #ffffff;
+  border-color: #198754 !important;
+}
