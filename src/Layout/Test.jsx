@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { styled, useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import MuiDrawer from "@mui/material/Drawer";
@@ -20,8 +20,7 @@ import ProfileDropDown from "./ProfileDropDown";
 import Cookies from "js-cookie";
 import axios from "axios";
 import { Link, NavLink } from "react-router-dom";
-import ArticleRoundedIcon from "@mui/icons-material/ArticleRounded";
-import { Toaster } from "react-hot-toast";
+import { Toaster, toast } from "react-hot-toast";
 
 const drawerWidth = 240;
 
@@ -78,7 +77,7 @@ const Drawer = styled(MuiDrawer, {
 })(({ theme, open }) => ({
   width: drawerWidth,
   flexShrink: 0,
-  whiteSpace: "nowrap",
+  Space: "nowrap",
   boxSizing: "border-box",
   ...(open && {
     ...openedMixin(theme),
@@ -131,22 +130,33 @@ export default function Test(props) {
   const drawerItems = [
     {
       text: "Project",
-      icon: <i className="bi bi-kanban"></i>,
+      icon: <i className="bi bi-kanban nav-icons"></i>,
       link: "/project",
     },
     {
       text: "Service",
-      icon: <i className="bi bi-stack"></i>,
+      icon: <i className="bi bi-stack  nav-icons"></i>,
       link: "/service",
     },
     {
       text: "Blog",
-      icon: <i className="bi bi-newspaper"></i>,
+      icon: <i className="bi bi-newspaper  nav-icons"></i>,
       link: "/blog",
     },
   ];
 
-  const bottomDrawerItems = [];
+  const bottomDrawerItems = [
+    {
+      text: "Sign Out",
+      icon: <i className="bi bi-box-arrow-right  nav-icons"></i>,
+      onclick: () => {
+        Cookies.remove("token");
+        sessionStorage.removeItem("token");
+        toast.success("Logout successful");
+        window.location.href = "/login";
+      },
+    },
+  ];
 
   if (!isLoggedIn) {
     drawerItems.push({ text: "Login", link: "/login" });
@@ -158,8 +168,13 @@ export default function Test(props) {
 
   return (
     <Box sx={{ display: "flex" }}>
+      <Toaster position="top-center" reverseOrder={false} />
       <CssBaseline />
-      <AppBar position="fixed" open={open}>
+      <AppBar
+        position="fixed"
+        open={open}
+        sx={{ backgroundColor: "#23262f", color: "#A5A5AB", height: "70px" }}
+      >
         <Toolbar>
           <IconButton
             color="inherit"
@@ -192,8 +207,12 @@ export default function Test(props) {
           </div>
         </Toolbar>
       </AppBar>
-      <Drawer variant="permanent" open={open}>
-        <DrawerHeader>
+      <Drawer
+        variant="permanent"
+        open={open}
+        sx={{ backgroundColor: "#23262f !important" }}
+      >
+        <DrawerHeader sx={{ backgroundColor: "#23262f", color: "#A5A5AB" }}>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === "rtl" ? (
               <ChevronRightIcon />
@@ -202,8 +221,7 @@ export default function Test(props) {
             )}
           </IconButton>
         </DrawerHeader>
-        <Divider />
-        <List>
+        <List sx={{ backgroundColor: "#23262f", color: "#A5A5AB" }}>
           {drawerItems.map((item, index) => (
             <ListItem key={index} disablePadding sx={{ display: "block" }}>
               <ListItemButton
@@ -215,6 +233,10 @@ export default function Test(props) {
                   minHeight: 48,
                   justifyContent: open ? "initial" : "center",
                   px: 2.5,
+                  "&:hover": {
+                    backgroundColor: "#FF592C",
+                    color: "#FFFFFF",
+                  },
                 }}
               >
                 <ListItemIcon
@@ -222,6 +244,9 @@ export default function Test(props) {
                     minWidth: 0,
                     mr: open ? 3 : "auto",
                     justifyContent: "center",
+                    "&:hover": {
+                      color: "red", // Change icon color when hovered
+                    },
                   }}
                 >
                   {item.icon}
@@ -235,9 +260,20 @@ export default function Test(props) {
           ))}
         </List>
         <Divider />
-        <List>
+        <List
+          sx={{ backgroundColor: "#23262f", color: "#A5A5AB", height: "100%" }}
+        >
           {bottomDrawerItems.map((item, index) => (
-            <ListItem key={index} disablePadding sx={{ display: "block" }}>
+            <ListItem
+              key={index}
+              disablePadding
+              sx={{
+                display: "flex",
+                height: "100%",
+                justifyContent: "",
+                alignItems: "end",
+              }}
+            >
               <ListItemButton
                 component={NavLink}
                 to={item.link}
@@ -247,6 +283,10 @@ export default function Test(props) {
                   minHeight: 48,
                   justifyContent: open ? "initial" : "center",
                   px: 2.5,
+                  "&:hover": {
+                    backgroundColor: "#FF592C",
+                    color: "#FFFFFF",
+                  },
                 }}
               >
                 <ListItemIcon
