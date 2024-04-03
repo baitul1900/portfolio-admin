@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
-import { updateUserProfile, getUserProfile } from "../store/authStore";
+import { useState, useEffect } from "react";
 import toast, { Toaster } from "react-hot-toast";
+import { updateUserProfile, getUserProfile } from "../store/authStore";
 import firebase from "firebase/compat/app";
 import "firebase/compat/storage";
 import { Link } from "react-router-dom";
@@ -10,13 +10,12 @@ import ImgCrop from "antd-img-crop";
 const Profile = () => {
   const [password, setPassword] = useState("");
   const [image, setImage] = useState(null);
-  const [errorMessage, setErrorMessage] = useState("");
-  const [successMessage, setSuccessMessage] = useState("");
   const [userProfile, setUserProfile] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     fetchUserProfile();
-  }, []);
+  }, [userProfile]);
 
   const fetchUserProfile = async () => {
     try {
@@ -24,15 +23,16 @@ const Profile = () => {
       if (response.status === "success") {
         setUserProfile(response.data);
       } else {
-        setErrorMessage("Failed to fetch user profile");
+        console.error("Failed to fetch user profile");
       }
     } catch (error) {
-      setErrorMessage("Failed to fetch user profile");
+      console.error("Failed to fetch user profile");
     }
   };
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
     try {
       let imageUrl = userProfile.image;
@@ -51,14 +51,16 @@ const Profile = () => {
       // Check the response status
       if (response.status === "success") {
         // If successful, display success message
-        setSuccessMessage(response.message);
+        toast.success("Profile updated successfully");
       } else {
         // If there's an error, display error message
-        setErrorMessage(response.message);
+        toast.error(response.message);
       }
     } catch (error) {
       // Handle any errors
-      setErrorMessage(error.message || "Failed to update profile");
+      toast.error(error.message || "Failed to update profile");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -68,24 +70,17 @@ const Profile = () => {
 
   return (
     <div className="container-fluid mt-4">
+      <Toaster position="top-center" reverseOrder={false} />
       <h3 className="font-weight-one">Profile Details</h3>
       <nav aria-label="breadcrumb">
         <ol className="breadcrumb ">
           <li className="breadcrumb-item">
-            <Link
-              to={"/"}
-              href="#"
-              className="text-decoration-none p-s-five link-one"
-            >
+            <Link to={"/"} className="text-decoration-none p-s-five link-one">
               Home
             </Link>
           </li>
           <li className="breadcrumb-item active" aria-current="page">
-            <Link
-              to={"/profile"}
-              href="#"
-              className="text-decoration-none p-s-five"
-            >
+            <Link to={"/profile"} className="text-decoration-none p-s-five">
               Profile
             </Link>
           </li>
@@ -95,13 +90,11 @@ const Profile = () => {
       {/* profile section here */}
       {userProfile && (
         <div className="row">
-          <div className="col-7  rounded p-4 mt-4 mb-4 shadow">
+          <div className="col-7 rounded p-4 mt-4 mb-4 shadow">
             {/* information box here */}
-
-            <form htmlFor>
+            <form onSubmit={handleFormSubmit}>
               <div className="row">
                 <div className="col-6">
-                  {" "}
                   <div className="mb-3">
                     <label htmlFor="name" className="form-label">
                       Name:
@@ -129,7 +122,6 @@ const Profile = () => {
                     />
                   </div>
                 </div>
-
                 <div className="mb-3">
                   <label htmlFor="phone" className="form-label">
                     Phone:
@@ -142,47 +134,42 @@ const Profile = () => {
                     disabled
                   />
                 </div>
-
-                <form onSubmit={handleFormSubmit}>
-                  <div className="mb-3">
-                    <label htmlFor="password" className="form-label">
-                      Password:
-                    </label>
-                    <input
-                      id="password"
-                      type="password"
-                      className="form-control"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                    />
-                  </div>
-                  <div className="mb-3">
-                    <label htmlFor="image" className="form-label">
-                      Update Profile Picture:
-                    </label>
-
-                    <ImgCrop rotate>
-                      <Upload
-                        onChange={handleImageChange}
-                        action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-                        listType="picture-card"
-                        className="avatar-uploader text-light"
-                      >
-                        {image ? null : "+ Upload"}
-                      </Upload>
-                    </ImgCrop>
-                  </div>
-                  <button type="submit" className="btn btn-primary">
-                    Update Profile
-                  </button>
-                </form>
+                <div className="mb-3">
+                  <label htmlFor="password" className="form-label">
+                    Password:
+                  </label>
+                  <input
+                    id="password"
+                    type="password"
+                    className="form-control"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                </div>
+                <div className="mb-3">
+                  <label htmlFor="image" className="form-label">
+                    Update Profile Picture:
+                  </label>
+                  <ImgCrop rotate>
+                    <Upload
+                      onChange={handleImageChange}
+                      action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                      listType="picture-card"
+                      className="avatar-uploader text-light"
+                    >
+                      {image ? null : "+ Upload"}
+                    </Upload>
+                  </ImgCrop>
+                </div>
+                <button type="submit" className="btn btn-primary w-25" disabled={loading}>
+                {loading ? 'Updating...' : 'Update Profile'}
+                </button>
               </div>
             </form>
           </div>
 
           <div className="col-5 d-flex justify-content-center p-4 mt-4 mb-4">
             <div className="header_img-02">
-              {" "}
               <img
                 src={userProfile.image}
                 className="img-fluid pro-pic"
