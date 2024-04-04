@@ -33,7 +33,7 @@ const LoginComponent = () => {
       const response = await loginUser(formData.email, formData.password);
       if (response.status === "success") {
         toast.success("Successfully Logged In!");
-        navigate("/profile");
+        navigate("/");
       } else {
         toast.error(response.message || "Failed to login");
       }
