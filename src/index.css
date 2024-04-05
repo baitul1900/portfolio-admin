@@ -314,12 +314,11 @@ a {
     #ff9671
   );
   border-radius: 24px !important;
-  width: 799px;
 }
 
 strong {
   color: #fff;
-  font-size: 32px;
+  font-size: 64px;
   font-weight: 700;
 }
 
@@ -332,3 +331,23 @@ strong {
 .progress-bar {
   background-color: var(--buttoncolor) !important ;
 }
+
+
+.dashboard-cards {
+  color: var(--whiteTwo) !important;
+  padding: 20px 24px;
+  border-radius: 12px !important;
+background: rgba(53, 47, 47, 0.40) !important;
+}
+
+
+.head {
+  display: flex !important;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.count-number {
+  font-size: 45px;
+}
+

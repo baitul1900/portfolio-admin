@@ -3,6 +3,7 @@ import { getUserProfile } from "../../store/authStore";
 import { Link } from "react-router-dom";
 import imageOne from "../../assets/image/instructor-with-woman (1).webp";
 import axios from "axios";
+import PieChart from "./PieChart";
 
 const TopSection = () => {
   const day = new Date();
@@ -49,7 +50,7 @@ const TopSection = () => {
 
   return (
     <Fragment>
-      <section className="d-flex justify-content-evenly">
+      <section className="">
         <div className="card horizontal-card">
           <div className="row">
             <div className="col-8">
@@ -69,13 +70,13 @@ const TopSection = () => {
               </Link>
             </div>
 
-            <div className="col-4 align-self-center">
+            <div className="col-4 align-self-center mt-4">
               <img src={imageOne} className="img-fluid" alt="image" />
             </div>
           </div>
         </div>
 
-        <div className="">
+        <div className="mt-5">
           <h3>Activity Progress</h3>
           <p className="p-s-five text-light">Progress: {progress}%</p>
           <div className="progress" style={{ height: "5px" }}>
@@ -85,6 +86,10 @@ const TopSection = () => {
               style={{ width: `${progress}%` }}
             ></div>
           </div>
+        </div>
+
+        <div className="my-5">
+          <PieChart/>
         </div>
       </section>
     </Fragment>
