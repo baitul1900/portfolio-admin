@@ -76,7 +76,8 @@ const TopSection = () => {
           </div>
         </div>
 
-        <div className="mt-5">
+        <div className="row">
+          <div className="col-8"> <div className="mt-5">
           <h3>Activity Progress</h3>
           <p className="p-s-five text-light">Progress: {progress}%</p>
           <div className="progress" style={{ height: "5px" }}>
@@ -86,11 +87,17 @@ const TopSection = () => {
               style={{ width: `${progress}%` }}
             ></div>
           </div>
-        </div>
-
-        <div className="my-5">
+        </div></div>
+          <div className="col-4">
+          <div className="my-5" >
           <PieChart/>
         </div>
+          </div>
+        </div>
+
+       
+
+        
       </section>
     </Fragment>
   );

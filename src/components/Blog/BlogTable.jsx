@@ -77,7 +77,7 @@ const BlogTable = () => {
       key: "action",
       render: (_, record) => (
         <Space size="middle">
-          <Link className="text-dark" to={`/blog-updated/${record._id}`}>
+          <Link className="text-light" to={`/blog-updated/${record._id}`}>
             <EditOutlined />
           </Link>
 
@@ -120,6 +120,11 @@ const BlogTable = () => {
           components: {
             Table: {
               cellFontSizeMD: 16,
+              borderColor: "transparent",
+              borderColorHover: "transparent",
+              borderColorFocus: "transparent",
+              borderColorSelected: "transparent",
+              borderColorSelectedHover: "transparent",
             },
           },
         }}
@@ -128,7 +133,7 @@ const BlogTable = () => {
           columns={columns}
           dataSource={blogList}
           size="middle"
-          bordered
+          
           pagination={{
             pageSize: 10,
             showSizeChanger: true,
@@ -145,15 +150,17 @@ const BlogTable = () => {
 
       <Modal
         footer={null}
-        centered
+        top
         open={open}
         onOk={() => setOpen(false)}
         onCancel={() => setOpen(false)}
         width={1000}
+        height={500}
       >
         {selectedBlog && <BlogView blog={selectedBlog} />}
       </Modal>
       {/* modal here for view product end*/}
+      
 
       {/* project create modal */}
       <Modal

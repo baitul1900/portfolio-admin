@@ -34,7 +34,7 @@ const App = () => {
             <Route path="/project/:id" element={<ProjectView />} />
             <Route path="/project-update/:id" element={<ProjectUpdatePage />} />
             <Route path="/service" element={<ServicePage />} />
-            <Route path="/servicebyId/:id" element={<ServiceById />} />
+            <Route path="/servicebyId/:id" element={<ServiceById />} /> 
             <Route path="/create-service" element={<CreateService/>} />
             <Route path="/update-service/:id" element={<ServiceUpdate/>} />
             <Route path="blog" element={<BlogPage/>} />

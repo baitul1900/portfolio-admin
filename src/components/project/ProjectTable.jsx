@@ -15,7 +15,7 @@ const ProjectTable = () => {
 
   useEffect(() => {
     projectRequest();
-  }, [project]);
+  }, []);
 
   const handleSearch = async (value) => {
     if (value) {
@@ -88,7 +88,7 @@ const ProjectTable = () => {
       key: "action",
       render: (_, record) => (
         <Space size="middle">
-          <Link className="text-dark" to={`/project-update/${record._id}`}>
+          <Link className="text-light" to={`/project-update/${record._id}`}>
             <EditOutlined />
           </Link>
 
@@ -119,22 +119,22 @@ const ProjectTable = () => {
       <Toaster position="top-center" reverseOrder={false} />
 
       <div className="row d-flex justify-content-between">
-        <div className="col-8">
+        <div className="col-4">
           <h1>Project</h1>
         </div>
 
-        <div className="col-3 text-end ">
+        <div className="col-2 d-flex justify-content-end text-end ">
           <Search
             placeholder="Search projects"
-            className=""
+            className="w-70"
             onSearch={handleSearch}
             enterButton
           />
         </div>
 
-        <div className="col-1 text-end">
+        <div className="col-2 text-end">
           <Link
-            className="btn btn-success mb-4"
+            className="btn btn-primary mb-4"
             onClick={() => setOpenTwo(true)}
           >
             Add Project
@@ -148,16 +148,19 @@ const ProjectTable = () => {
           components: {
             Table: {
               cellFontSizeMD: 16,
+              borderColor: "#f0",
             },
-            Pagination: {},
+            // Pagination: {},
           },
         }}
       >
         <Table
           columns={columns}
           dataSource={project}
-          size="middle"
-          bordered
+          size="small"
+          rowClassName="no-hover"
+          bordered = {false} 
+       
           pagination={{
             pageSize: 10,
             showSizeChanger: true,
