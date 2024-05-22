@@ -39,7 +39,7 @@ const LoginComponent = () => {
       }
     } catch (error) {
       console.error("Error logging in:", error);
-      toast.error("An error occurred while logging in");
+      toast.error("Error logging in:", error);
     }
     setLoading(false);
   };
@@ -55,7 +55,7 @@ const LoginComponent = () => {
         </div>
       ) : null}
 
-      <Toaster position="bottom-center" reverseOrder={false} />
+      {/* <Toaster position="bottom-center" reverseOrder={false} /> */}
       
       <div className="container" style={{ maxWidth: "1000px" }}>
         <div className="row">
@@ -94,6 +94,7 @@ const LoginComponent = () => {
               <button type="submit" className="btn btn-primary">
                 Login
               </button>
+              <p className="text-light mt-3">Don't have account yet? <a href="/registration">Register</a></p>
             </form>
           </div>
         </div>

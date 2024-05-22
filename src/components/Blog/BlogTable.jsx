@@ -168,7 +168,7 @@ const BlogTable = () => {
         top
         open={openTwo}
         onOk={() => setOpenTwo(false)}
-        onCancel={() => setOpenTwo(false)}
+        onCancel={() => setOpenTwo(false)}n
         width={1000}
         height={600}
         className=" mb-5"

@@ -24,12 +24,12 @@ const Registration = () => {
     e.preventDefault();
     sessionStorage.setItem("email", formData.email);
 
-     // Phone number validation
-     const isValidPhoneNumber = /^\+88\d{11}$/.test(formData.phone);
-     if (!isValidPhoneNumber) {
-       toast.error("Please enter a valid Bangladeshi phone number with +88"); // Display error message
-       return;
-     }
+    // Phone number validation
+    const isValidPhoneNumber = /^\+88\d{11}$/.test(formData.phone);
+    if (!isValidPhoneNumber) {
+      toast.error("Please enter a valid Bangladeshi phone number with +88"); // Display error message
+      return;
+    }
 
     // Start loading
     setLoading(true);
@@ -57,7 +57,7 @@ const Registration = () => {
   };
 
   return (
-    <div className="container mt-5 pt-5">
+    <div className="container mt-5 pt-5 ">
       <div className="row justify-content-center">
         <div className="col-md-6">
           <form className="form" onSubmit={handleSubmit}>
@@ -65,7 +65,7 @@ const Registration = () => {
               <input
                 type="text"
                 name="name"
-                className="form-control"
+                className="form-control bg-light"
                 placeholder="Name"
                 onChange={handleChange}
               />
@@ -74,7 +74,7 @@ const Registration = () => {
               <input
                 type="email"
                 name="email"
-                className="form-control"
+                className="form-control bg-light"
                 placeholder="Email"
                 onChange={handleChange}
               />
@@ -83,7 +83,7 @@ const Registration = () => {
               <input
                 type="text"
                 name="phone"
-                className="form-control"
+                className="form-control bg-light"
                 placeholder="Phone"
                 onChange={handleChange}
               />
@@ -92,7 +92,7 @@ const Registration = () => {
               <input
                 type="password"
                 name="password"
-                className="form-control"
+                className="form-control bg-light"
                 placeholder="Password"
                 onChange={handleChange}
               />
